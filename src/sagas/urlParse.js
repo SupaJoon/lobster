@@ -4,8 +4,6 @@ import urlParse from "../urlParse";
 import {
   toggleFilterIntersection,
   toggleCaseSensitivity,
-  scrollToLine,
-  ensureBookmark,
   loadBookmarks,
   loadInitialFilters,
   loadInitialHighlights,
@@ -21,12 +19,6 @@ export default function* (): Saga<void> {
   );
   yield put(loadInitialFilters([...urlData.filters]));
   yield put(loadInitialHighlights([...urlData.highlights]));
-
-  if (urlData.scroll != null && Number.isFinite(urlData.scroll)) {
-    const { scroll } = urlData;
-    yield put(scrollToLine(scroll));
-    yield put(ensureBookmark(scroll));
-  }
 
   const settings = yield select(getLogViewerSettings);
   if (urlData.caseSensitive !== null && urlData.caseSensitive !== undefined) {
